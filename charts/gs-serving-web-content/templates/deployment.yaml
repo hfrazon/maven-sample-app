@@ -26,10 +26,10 @@ spec:
       - name: {{ .Chart.Name }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  
-        resources:
-            limits:
-              cpu: {{ .Values.resources.limits.cpu }}    
-              memory: {{ .Values.resources.limits.memory }}          
+        # resources:
+        #     limits:
+        #       cpu: {{ .Values.resources.limits.cpu }}    
+        #       memory: {{ .Values.resources.limits.memory }}          
         ports:
           - containerPort: 8080
             protocol: "TCP"
