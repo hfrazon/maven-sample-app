@@ -2,12 +2,12 @@ apiVersion: skaffold/v1beta11
 kind: Config
 build:
   artifacts:
-  - image: '{{.DOCKER_REGISTRY}}/hfrazon/{{.APP_NAME}}'
+  - image: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}'
     context: ./docker/wildfly/
     docker: {}
   tagPolicy:
     envTemplate:
-      template: '{{.DOCKER_REGISTRY}}/hfrazon/{{.APP_NAME}}:{{.VERSION}}'
+      template: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}:{{.VERSION}}'
   local: {}
 deploy:
   kubectl: {}
@@ -17,7 +17,7 @@ profiles:
   build:
     tagPolicy:
       envTemplate:
-        template: '{{.DOCKER_REGISTRY}}/hfrazon/{{.APP_NAME}}:{{.DIGEST_HEX}}'
+        template: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}:{{.DIGEST_HEX}}'
     local: {}
   deploy:
     helm:
@@ -25,5 +25,5 @@ profiles:
       - name: '{{.APP_NAME}}'
         chartPath: 'charts/{{.APP_NAME}}'
         setValueTemplates:
-          image.repository: '{{.DOCKER_REGISTRY}}/hfrazon/{{.APP_NAME}}'
+          image.repository: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}'
           image.tag: '{{.DIGEST_HEX}}'
