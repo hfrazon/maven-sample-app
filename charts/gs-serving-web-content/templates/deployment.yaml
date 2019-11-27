@@ -1,5 +1,5 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: v1
+kind: Deployment
 metadata:
   name: {{ template "name" . }}
   labels:
@@ -33,49 +33,19 @@ spec:
         livenessProbe:
           failureThreshold: 20
           httpGet:
-            path: /fiscalizacao
+            path: /greeting
             port: 8080
             scheme: HTTP
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
-        name: fiscalizacao
+        name: greeting
         readinessProbe:
           failureThreshold: 20
           httpGet:
-            path: /fiscalizacao
+            path: /greeting
             port: 8080
             scheme: HTTP
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1                                
-        env:
-        #### CONFIG-MAPS
-        - name: FISCALIZACAO_DATASOURCE_CONNECTION_URL
-          valueFrom:
-            configMapKeyRef:
-              name: fiscalizacao-config
-              key: FISCALIZACAO_DATASOURCE_CONNECTION_URL
-        - name: FISCALIZACAO_DATASOURCE_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: fiscalizacao-config
-              key: FISCALIZACAO_DATASOURCE_USERNAME
-        - name: JAVA_OPTS
-          valueFrom:
-            configMapKeyRef:
-              name: fiscalizacao-config
-              key: JAVA_OPTS
-        #### SECRETS    
-        - name: FISCALIZACAO_DATASOURCE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: fiscalizacao-secrets
-              key: FISCALIZACAO_DATASOURCE_PASSWORD                               
-        volumeMounts:
-        - name: dados
-          mountPath: /mnt
-      volumes:
-        - name: dados
-          persistentVolumeClaim:
-            claimName: {{ template "name" . }}
