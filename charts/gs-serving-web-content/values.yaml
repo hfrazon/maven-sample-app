@@ -18,9 +18,4 @@ service:
   externalPort: 80
   internalPort: 8080
 
-# resources:
-#   limits:
-#     cpu: '2'
-#     memory: '1024Mi'
-
 nameOverride: gs-serving-web-content
