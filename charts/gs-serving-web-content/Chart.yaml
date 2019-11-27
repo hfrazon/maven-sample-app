@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Helm Chart gs-serving-web-content
+name: gs-serving-web-content
+version: draft

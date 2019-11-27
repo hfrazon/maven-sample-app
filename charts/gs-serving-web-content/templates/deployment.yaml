@@ -1,0 +1,81 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: {{ template "name" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Rolling
+    rollingParams:
+      intervalSeconds: {{ .Values.intervalSeconds }}
+      maxSurge: {{ .Values.maxSurge }}
+      maxUnavailable: {{ .Values.maxUnavailable }}
+      timeoutSeconds: {{ .Values.timeoutSeconds }}
+      updatePeriodSeconds: {{ .Values.updatePeriodSeconds }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  
+        resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}    
+              memory: {{ .Values.resources.limits.memory }}          
+        ports:
+          - containerPort: 8080
+            protocol: "TCP"
+        livenessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /fiscalizacao
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: fiscalizacao
+        readinessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /fiscalizacao
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1                                
+        env:
+        #### CONFIG-MAPS
+        - name: FISCALIZACAO_DATASOURCE_CONNECTION_URL
+          valueFrom:
+            configMapKeyRef:
+              name: fiscalizacao-config
+              key: FISCALIZACAO_DATASOURCE_CONNECTION_URL
+        - name: FISCALIZACAO_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: fiscalizacao-config
+              key: FISCALIZACAO_DATASOURCE_USERNAME
+        - name: JAVA_OPTS
+          valueFrom:
+            configMapKeyRef:
+              name: fiscalizacao-config
+              key: JAVA_OPTS
+        #### SECRETS    
+        - name: FISCALIZACAO_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: fiscalizacao-secrets
+              key: FISCALIZACAO_DATASOURCE_PASSWORD                               
+        volumeMounts:
+        - name: dados
+          mountPath: /mnt
+      volumes:
+        - name: dados
+          persistentVolumeClaim:
+            claimName: {{ template "name" . }}
