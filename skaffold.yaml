@@ -2,12 +2,12 @@ apiVersion: skaffold/v1beta11
 kind: Config
 build:
   artifacts:
-  - image: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}'
-    context: ./docker/wildfly/
+  - image: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/gs-serving-web-content'
+    context: .
     docker: {}
   tagPolicy:
     envTemplate:
-      template: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}:{{.VERSION}}'
+      template: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/gs-serving-web-content:{{.VERSION}}'
   local: {}
 deploy:
   kubectl: {}
@@ -17,13 +17,13 @@ profiles:
   build:
     tagPolicy:
       envTemplate:
-        template: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}:{{.DIGEST_HEX}}'
+        template: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/gs-serving-web-content:{{.DIGEST_HEX}}'
     local: {}
   deploy:
     helm:
       releases:
-      - name: '{{.APP_NAME}}'
-        chartPath: 'charts/{{.APP_NAME}}'
+      - name: 'gs-serving-web-content'
+        chartPath: 'charts/gs-serving-web-content'
         setValueTemplates:
-          image.repository: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/{{.APP_NAME}}'
+          image.repository: 'docker-registry.jx.35.198.54.220.nip.io/hfrazon/gs-serving-web-content'
           image.tag: '{{.DIGEST_HEX}}'
