@@ -19,7 +19,8 @@ pipeline {
         container('maven') {
           // Carrega credenciais do git
           sh "git config --global credential.helper store"
-          sh "jx step git credentials"        
+          sh "jx step git credentials"   
+	  sh "echo \$(jx-release-version) > VERSION"
           // Faz o push da nova tag para o git
           sh "jx step tag --version \$(cat VERSION)"
 		  //-------------------------------------------------------------------------------------------------------------------
