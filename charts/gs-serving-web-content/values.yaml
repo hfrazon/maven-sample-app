@@ -8,8 +8,8 @@ maxUnavailable: 0
 timeoutSeconds: 900
 updatePeriodSeconds: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 10.15.253.13:5000/sfb-cicd/gs-serving-web-content
+  tag: 0.1.15
   pullPolicy: IfNotPresent
 
 service:
