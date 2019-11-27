@@ -6,7 +6,7 @@ pipeline {
     label "jenkins-maven"
   }
   environment {
-    ORG = 'hfrazon'
+    ORG = 'sfb-cicd'
     APP_NAME = 'gs-serving-web-content'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
   }
@@ -65,4 +65,5 @@ pipeline {
        }
   }
 }
+
 
