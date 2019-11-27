@@ -47,7 +47,7 @@ pipeline {
             // Versiona e armazena o Helm Chart no repositorio de Charts (Chartmuseum)
             sh "jx step helm release"
             // Faz a promocao para o ambiente
-            sh "jx promote -b --no-poll=true --no-wait=true --env sfb-maven-prod --timeout 1h --version \$(cat ../../VERSION)"
+            sh "jx promote -b --no-poll=true --no-wait=true --env gs-serving-web-content --timeout 1h --version \$(cat ../../VERSION)"
           }
         }
       }
