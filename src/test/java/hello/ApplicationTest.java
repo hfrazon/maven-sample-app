@@ -34,12 +34,12 @@ public class ApplicationTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Test
-	public void homePage() throws Exception {
-		// N.B. jsoup can be useful for asserting HTML content
-		mockMvc.perform(get("/index.html"))
-				.andExpect(content().string(containsString("Clique aqui")));
-	}
+	// @Test
+	// public void homePage() throws Exception {
+	// 	// N.B. jsoup can be useful for asserting HTML content
+	// 	mockMvc.perform(get("/index.html"))
+	// 			.andExpect(content().string(containsString("Clique aqui")));
+	// }
 
 	@Test
 	public void greeting() throws Exception {
