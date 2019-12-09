@@ -17,13 +17,14 @@ pipeline {
       }
       steps {
         container('maven') {
+        container('nodejs') {
           // Carrega credenciais do git
           sh "git config --global credential.helper store"
-          sh "jx step git credentials"   
-	  //sh "echo \$(jx-release-version) > VERSION"
-          // Faz o push da nova tag para o git
-          //sh "jx step tag --version \$(cat VERSION)"
-		  //-------------------------------------------------------------------------------------------------------------------
+          sh "jx step git credentials"
+          // Tratamento das versoes dos artefatos
+          VERSION = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
+          sh "echo $VERSION > VERSION"
+	  //-------------------------------------------------------------------------------------------------------------------
           // Sessao dedicada a construcao da aplicacao e prepracao para criacao de imagem Docker
           sh "mvn clean install"
           sh "mv target/gs-serving-web-content-0.1.0.jar target/gs-serving-web-content.jar"    
