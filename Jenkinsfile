@@ -20,9 +20,9 @@ pipeline {
           // Carrega credenciais do git
           sh "git config --global credential.helper store"
           sh "jx step git credentials"   
-	  sh "echo \$(jx-release-version) > VERSION"
+	  //sh "echo \$(jx-release-version) > VERSION"
           // Faz o push da nova tag para o git
-          sh "jx step tag --version \$(cat VERSION)"
+          //sh "jx step tag --version \$(cat VERSION)"
 		  //-------------------------------------------------------------------------------------------------------------------
           // Sessao dedicada a construcao da aplicacao e prepracao para criacao de imagem Docker
           sh "mvn clean install"
