@@ -21,7 +21,7 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
           // Tratamento das versoes dos artefatos
-          //env.VERSION = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
+          ///env.VERSION = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
           script { VERSION = sh(returnStdout: true, script: 'git tag -l --points-at HEAD').trim() }
           sh "echo $VERSION > VERSION"
 	  //-------------------------------------------------------------------------------------------------------------------
