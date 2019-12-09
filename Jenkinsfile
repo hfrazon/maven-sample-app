@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Construcao dos artefatos de Producao - CI') {
       when {
-        branch 'master'
+        tag '*-stable'
       }
       steps {
         container('maven') {
@@ -37,7 +37,7 @@ pipeline {
     }
     stage('Promove para ambiente de Producao') {
       when {
-        branch 'master'
+        tag '*-stable'
       }
       steps {
         container('maven') {
