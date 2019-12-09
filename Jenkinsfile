@@ -21,7 +21,7 @@ pipeline {
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
           // Tratamento das versoes dos artefatos
-          def VERSION = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
+          env.VERSION = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
           sh "echo $VERSION > VERSION"
 	  //-------------------------------------------------------------------------------------------------------------------
           // Sessao dedicada a construcao da aplicacao e prepracao para criacao de imagem Docker
