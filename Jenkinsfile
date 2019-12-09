@@ -17,7 +17,6 @@ pipeline {
       }
       steps {
         container('maven') {
-        container('nodejs') {
           // Carrega credenciais do git
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
