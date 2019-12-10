@@ -2,12 +2,12 @@ apiVersion: skaffold/v1beta11
 kind: Config
 build:
   artifacts:
-  - image: '{{DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content'
+  - image: 'sfb-cicd/gs-serving-web-content'
     context: .
     docker: {}
   tagPolicy:
     envTemplate:
-      template: '{{DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content:{{.VERSION}}'
+      template: '{{.DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content:{{.VERSION}}'
   local: {}
 deploy:
   kubectl: {}
@@ -17,7 +17,7 @@ profiles:
   build:
     tagPolicy:
       envTemplate:
-        template: '{{DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content:{{.DIGEST_HEX}}'
+        template: '{{.DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content:{{.DIGEST_HEX}}'
     local: {}
   deploy:
     helm:
@@ -25,5 +25,5 @@ profiles:
       - name: 'gs-serving-web-content'
         chartPath: 'charts/gs-serving-web-content'
         setValueTemplates:
-          image.repository: '{{DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content'
+          image.repository: '{{.DOCKER_REGISTRY}}/sfb-cicd/gs-serving-web-content'
           image.tag: '{{.DIGEST_HEX}}'
