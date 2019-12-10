@@ -3,7 +3,7 @@ CURRENT=$(pwd)
 NAME := gs-serving-web-content
 OS := $(shell uname)
 RELEASE_VERSION := $(shell cat ../../VERSION)
-IMAGE_NS := $(shell cat ../../IMAGE_NS)
+#IMAGE_NS := $(shell cat ../../IMAGE_NS)
 
 build: clean
 	rm -rf requirements.lock
