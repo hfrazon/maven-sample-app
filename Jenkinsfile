@@ -24,6 +24,7 @@ pipeline {
           //script { VERSION = sh(returnStdout: true, script: 'git tag -l --points-at HEAD').trim() }
           sh "echo \$(git describe --abbrev=0 --tags \$(git rev-list --tags --skip=0 --max-count=1)) > VERSION"
           //sh "echo $VERSION > VERSION"
+          sh "echo $DOCKER_REGISTRY"
 	  //-------------------------------------------------------------------------------------------------------------------
           // Sessao dedicada a construcao da aplicacao e prepracao para criacao de imagem Docker
           sh "mvn clean install"
