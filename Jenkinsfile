@@ -44,6 +44,7 @@ pipeline {
         container('maven') {
           dir("charts/gs-serving-web-content") {
             // Gera changelog
+            sh "make tag"
             sh "jx step changelog --version \$(cat ../../VERSION)"
             // Versiona e armazena o Helm Chart no repositorio de Charts (Chartmuseum)
             sh "jx step helm release"
