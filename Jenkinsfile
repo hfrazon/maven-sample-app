@@ -31,7 +31,7 @@ pipeline {
           sh "mv target/gs-serving-web-content-0.1.0.jar target/gs-serving-web-content.jar"    
 		  //-------------------------------------------------------------------------------------------------------------------      
           // Cria imagem Docker com Skaffold (com a nova tag)
-          sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
+          sh "export VERSION=`cat VERSION` && export DOCKER_REGISTRY=`echo $DOCKER_REGISTRY` && skaffold build -f skaffold.yaml"
           // Faz checagem da imagem
           sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"          
         } 
